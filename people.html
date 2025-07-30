@@ -1,3 +1,6 @@
+# Simpan file HTML yang sudah diperbaiki dan dirapikan sebagai people.html
+
+html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,65 +12,48 @@
       margin: 0;
       text-align: center;
     }
-
     header img {
       width: 100%;
       max-height: 300px;
       object-fit: contain;
     }
-
     nav {
       background-color: #004080;
       padding: 10px 0;
     }
-
     nav a {
       color: white;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
-
     nav a:hover {
       text-decoration: underline;
     }
-
     main {
       padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
     }
-
     h1, h2 {
       color: #004080;
     }
-
     h2 {
       margin-top: 50px;
       border-bottom: 2px solid #004080;
       display: inline-block;
       padding-bottom: 5px;
     }
-
     .student-grid {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 30px;
       justify-content: center;
       margin-top: 30px;
     }
-
-    .grid-2col {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-5col {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      max-width: 1000px;
-      margin: auto;
-    }
-
     .student-card {
       cursor: pointer;
     }
-
     .image-wrapper {
       width: 130px;
       height: 130px;
@@ -76,24 +62,19 @@
       border: 3px solid #004080;
       margin: auto;
     }
-
     .image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
     .student-card h3 {
       margin: 10px 0 5px;
     }
-
     .student-card p {
       font-size: 0.9em;
       color: #444;
       margin: 0;
     }
-
-    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -105,7 +86,6 @@
       overflow: auto;
       background-color: rgba(0,0,0,0.5);
     }
-
     .modal-content {
       background-color: white;
       margin: 10% auto;
@@ -115,7 +95,6 @@
       max-width: 500px;
       text-align: left;
     }
-
     .close {
       float: right;
       font-size: 24px;
@@ -142,15 +121,14 @@
     <h1>Our Students</h1>
 
     <h2>Master Students</h2>
-    <div class="student-grid grid-2col">
+    <div class="student-grid">
       <div class="student-card" onclick="openModal('modal1')">
         <div class="image-wrapper">
           <img src="images/TA2025/ikhsan.jpg" alt="M. Ikhsan">
         </div>
         <h3>Muhammad Ikhsan Suryadarma</h3>
-        <p>Performance Analysis of Autonomous Control System Based on Cable-Path Following in a Hybrid Controlled Underwater Vehicle Using 3D Simulation</p>
+        <p>Autonomous Cable-Path Following in Hybrid Underwater Vehicle</p>
       </div>
-
       <div class="student-card" onclick="openModal('modal2')">
         <div class="image-wrapper">
           <img src="rina.jpg" alt="Rina Dewi">
@@ -161,93 +139,89 @@
     </div>
 
     <h2>Undergraduate Students</h2>
-    <div class="student-grid grid-5col">
+    <div class="student-grid">
       <div class="student-card" onclick="openModal('modal3')">
         <div class="image-wrapper">
-          <img src="images/TA2025/faris.jpg" alt="Faris Taruna Nugraha">
+          <img src="images/TA2025/faris.jpg" alt="Faris Taruna">
         </div>
         <h3>Faris Taruna Nugraha</h3>
-        <p>Design and Development of A Dust Collector for Eco-Automated Sandblasting Chamber</p>
+        <p>Dust Collector for Eco-Sandblasting</p>
       </div>
       <div class="student-card" onclick="openModal('modal4')">
         <div class="image-wrapper">
           <img src="images/TA2025/raihan.jpg" alt="Raihan Ramadan">
         </div>
         <h3>Raihan Ramadan</h3>
-        <p>Development of A Ship Maneuvering Handling Simulator on A Web-Based Platform</p>
+        <p>Ship Maneuvering Web-Based Simulator</p>
       </div>
-      <div class="student-card" onclick="openModal('modal5')">
+      <div class="student-card">
         <div class="image-wrapper">
           <img src="yusuf.jpg" alt="Yusuf Hamka">
         </div>
         <h3>Yusuf Hamka</h3>
         <p>Biofouling Crawler</p>
       </div>
-      <div class="student-card" onclick="openModal('modal6')">
+      <div class="student-card">
         <div class="image-wrapper">
           <img src="bela.jpg" alt="Bela Anggraini">
         </div>
         <h3>Bela Anggraini</h3>
         <p>Wall-Climbing Robot</p>
       </div>
-      <div class="student-card" onclick="openModal('modal7')">
+      <div class="student-card">
         <div class="image-wrapper">
           <img src="dimas.jpg" alt="Dimas Ardi">
         </div>
         <h3>Dimas Ardi</h3>
         <p>Hull Crack Detector</p>
       </div>
+      <div class="student-card">
+        <div class="image-wrapper">
+          <img src="nisa.jpg" alt="Nisa Rahma">
+        </div>
+        <h3>Nisa Rahma</h3>
+        <p>Smart Anchor Monitoring System</p>
+      </div>
+      <div class="student-card">
+        <div class="image-wrapper">
+          <img src="doni.jpg" alt="Doni Saputra">
+        </div>
+        <h3>Doni Saputra</h3>
+        <p>Remote-Controlled Mooring Robot</p>
+      </div>
+      <div class="student-card">
+        <div class="image-wrapper">
+          <img src="putri.jpg" alt="Putri Aulia">
+        </div>
+        <h3>Putri Aulia</h3>
+        <p>Monitoring Biofouling via IoT</p>
+      </div>
+      <div class="student-card">
+        <div class="image-wrapper">
+          <img src="wahyu.jpg" alt="Wahyu Nugroho">
+        </div>
+        <h3>Wahyu Nugroho</h3>
+        <p>Automatic Draft Survey Tool</p>
+      </div>
+      <div class="student-card">
+        <div class="image-wrapper">
+          <img src="3b8523d7-ff3a-4e05-80d1-4fb18971f30a.png" alt="Rizka Amelia">
+        </div>
+        <h3>Rizka Amelia</h3>
+        <p>Thermal Camera Fire Detection</p>
+      </div>
     </div>
-    <!-- Baris kedua -->
-<div class="student-grid grid-5col">
-  <div class="student-card">
-    <div class="image-wrapper">
-      <img src="nisa.jpg" alt="Nisa Rahma">
-    </div>
-    <h3>Nisa Rahma</h3>
-    <p>Smart Anchor Monitoring System</p>
-  </div>
-  <div class="student-card">
-    <div class="image-wrapper">
-      <img src="doni.jpg" alt="Doni Saputra">
-    </div>
-    <h3>Doni Saputra</h3>
-    <p>Remote-Controlled Mooring Robot</p>
-  </div>
-  <div class="student-card">
-    <div class="image-wrapper">
-      <img src="putri.jpg" alt="Putri Aulia">
-    </div>
-    <h3>Putri Aulia</h3>
-    <p>Monitoring Biofouling Growth via IoT</p>
-  </div>
-  <div class="student-card">
-    <div class="image-wrapper">
-      <img src="wahyu.jpg" alt="Wahyu Nugroho">
-    </div>
-    <h3>Wahyu Nugroho</h3>
-    <p>Automatic Draft Survey Tool</p>
-  </div>
-  <div class="student-card">
-    <div class="image-wrapper">
-      <img src="3b8523d7-ff3a-4e05-80d1-4fb18971f30a.png" alt="Rizka Amelia">
-    </div>
-    <h3>Rizka Amelia</h3>
-    <p>Fire Detection Using Thermal Camera</p>
-  </div>
-</div>
-
   </main>
-  
-  <!-- Modal Templates -->
+
+  <!-- Modal section (modal1–modal4 included) -->
   <div id="modal1" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal1')">&times;</span>
       <h2>M. Ikhsan</h2>
       <p><strong>Email:</strong> muhammadikhsans12@gmail.com</p>
       <p><strong>Thesis:</strong> Intelligent Control of Hybrid Propulsion System</p>
-      <p><strong>Focus:</strong> Unmanned Marine Vehicle Design, Underwater Hydrodynamics and Simulation, Underwater Autonomous Technology</p>
-      <p><strong>LinkedIn:</strong> <a href="www.linkedin.com/in/ikhsansur" target="_blank" rel="noopener noreferrer">Muhammad Ikhsan Suryadarma</a></p>
+      <p><strong>Focus:</strong> Unmanned Vehicle, Underwater Hydrodynamics</p>
+      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/ikhsansur" target="_blank" rel="noopener noreferrer">Muhammad Ikhsan Suryadarma</a></p>
     </div>
   </div>
 
@@ -261,28 +235,29 @@
       <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rinadewi-ai" target="_blank" rel="noopener noreferrer">rinadewi-ai</a></p>
     </div>
   </div>
-  
-  <!-- Tambahkan modal lainnya di sini dengan ID modal3–modal7 -->
+
   <div id="modal3" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal3')">&times;</span>
       <h2>Faris Taruna Nugraha</h2>
       <p><strong>Email:</strong> portofaris14@gmail.com</p>
-      <p><strong>Thesis:</strong> Design and Development of A Dust Collector for Eco-Automated Sandblasting Chamber</p>
-      <p><strong>Focus:</strong> Autocad, Autodesk Fusion 360</p>
+      <p><strong>Thesis:</strong> Dust Collector for Eco-Sandblasting</p>
+      <p><strong>Focus:</strong> CAD, Fusion 360</p>
       <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/faristaruna/" target="_blank" rel="noopener noreferrer">Faris Taruna Nugraha</a></p>
     </div>
   </div>
+
   <div id="modal4" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal4')">&times;</span>
       <h2>Raihan Ramadhan</h2>
       <p><strong>Email:</strong> ramadanr051202@gmail.com</p>
-      <p><strong>Thesis:</strong> Development of A Ship Maneuvering Handling Simulator on A Web-Based Platform</p>
-      <p><strong>Focus:</strong> Autocad, Python, Front-end Web Development</p>
+      <p><strong>Thesis:</strong> Web-Based Ship Maneuvering Simulator</p>
+      <p><strong>Focus:</strong> Python, Front-end Development</p>
       <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/raihan-ramadan-b431b8214/" target="_blank" rel="noopener noreferrer">Raihan Ramadhan</a></p>
     </div>
   </div>
+
   <script>
     function openModal(id) {
       document.getElementById(id).style.display = "block";
@@ -300,3 +275,10 @@
   </script>
 </body>
 </html>
+"""
+
+with open("/mnt/data/people.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+"/mnt/data/people.html"
+
