@@ -9,32 +9,38 @@
       margin: 0;
       text-align: center;
     }
+
     header img {
       width: 100%;
       max-height: 300px;
       object-fit: contain;
     }
+
     nav {
       background-color: #004080;
       padding: 10px 0;
     }
+
     nav a {
       color: white;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     main {
       padding: 40px 20px;
     }
-    h1 {
+
+    h1, h2 {
       color: #004080;
     }
+
     h2 {
-      color: #004080;
       margin-top: 50px;
       border-bottom: 2px solid #004080;
       display: inline-block;
@@ -47,9 +53,11 @@
       justify-content: center;
       margin-top: 30px;
     }
+
     .grid-2col {
       grid-template-columns: repeat(2, 1fr);
     }
+
     .grid-5col {
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       max-width: 1000px;
@@ -59,23 +67,33 @@
     .student-card {
       cursor: pointer;
     }
-    .student-card img {
+
+    .image-wrapper {
       width: 130px;
       height: 130px;
-      object-fit: cover;
       border-radius: 50%;
+      overflow: hidden;
       border: 3px solid #004080;
+      margin: auto;
     }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .student-card h3 {
       margin: 10px 0 5px;
     }
+
     .student-card p {
       font-size: 0.9em;
       color: #444;
       margin: 0;
     }
 
-    /* Modal */
+    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -87,6 +105,7 @@
       overflow: auto;
       background-color: rgba(0,0,0,0.5);
     }
+
     .modal-content {
       background-color: white;
       margin: 10% auto;
@@ -96,6 +115,7 @@
       max-width: 500px;
       text-align: left;
     }
+
     .close {
       float: right;
       font-size: 24px;
@@ -105,6 +125,7 @@
   </style>
 </head>
 <body>
+
   <header>
     <img src="Logo%20TKD%20Transparan.png" alt="Lab Logo">
   </header>
@@ -123,139 +144,63 @@
     <h2>Master Students</h2>
     <div class="student-grid grid-2col">
       <div class="student-card" onclick="openModal('modal1')">
-        <img src="ikhsan.png" alt="M. Ikhsan">
+        <div class="image-wrapper">
+          <img src="ikhsan.png" alt="M. Ikhsan">
+        </div>
         <h3>M. Ikhsan</h3>
-        <p>Intelligent Control of Hybrid Propulsion System</p>
+        <p>Intelligent Control of Hybrid Propulsion</p>
       </div>
+
       <div class="student-card" onclick="openModal('modal2')">
-        <img src="rina.jpg" alt="Rina Dewi">
+        <div class="image-wrapper">
+          <img src="rina.jpg" alt="Rina Dewi">
+        </div>
         <h3>Rina Dewi</h3>
-        <p>Reinforcement Learning for Docking System</p>
+        <p>RL-based Autonomous Docking</p>
       </div>
     </div>
 
     <h2>Undergraduate Students</h2>
     <div class="student-grid grid-5col">
       <div class="student-card" onclick="openModal('modal3')">
-        <img src="faris.jpg" alt="Faris Taruna">
+        <div class="image-wrapper">
+          <img src="faris.jpg" alt="Faris Taruna">
+        </div>
         <h3>Faris Taruna</h3>
         <p>Trash Skimmer Boat</p>
       </div>
       <div class="student-card" onclick="openModal('modal4')">
-        <img src="alya.jpg" alt="Alya Putri">
+        <div class="image-wrapper">
+          <img src="alya.jpg" alt="Alya Putri">
+        </div>
         <h3>Alya Putri</h3>
-        <p>Shipboard Fire Detector</p>
+        <p>Fire Detection System</p>
       </div>
       <div class="student-card" onclick="openModal('modal5')">
-        <img src="yusuf.jpg" alt="Yusuf Hamka">
+        <div class="image-wrapper">
+          <img src="yusuf.jpg" alt="Yusuf Hamka">
+        </div>
         <h3>Yusuf Hamka</h3>
         <p>Biofouling Crawler</p>
       </div>
       <div class="student-card" onclick="openModal('modal6')">
-        <img src="bela.jpg" alt="Bela Anggraini">
+        <div class="image-wrapper">
+          <img src="bela.jpg" alt="Bela Anggraini">
+        </div>
         <h3>Bela Anggraini</h3>
         <p>Wall-Climbing Robot</p>
       </div>
       <div class="student-card" onclick="openModal('modal7')">
-        <img src="dimas.jpg" alt="Dimas Ardi">
+        <div class="image-wrapper">
+          <img src="dimas.jpg" alt="Dimas Ardi">
+        </div>
         <h3>Dimas Ardi</h3>
-        <p>Ship Hull Inspection Tool</p>
+        <p>Hull Crack Detector</p>
       </div>
     </div>
   </main>
 
-  <!-- MODALS -->
+  <!-- Modal Templates -->
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('modal1')">&times;</span>
-      <h2>M. Ikhsan</h2>
-      <p><strong>Email:</strong> ikhsan@example.com</p>
-      <p><strong>Thesis:</strong> Intelligent Control of Hybrid Propulsion System</p>
-      <p><strong>Focus:</strong> Adaptive energy control in hybrid ships.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/ikhsan-marine" target="_blank" rel="noopener noreferrer">ikhsan-marine</a></p>
-    </div>
-  </div>
-
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal2')">&times;</span>
-      <h2>Rina Dewi</h2>
-      <p><strong>Email:</strong> rina@example.com</p>
-      <p><strong>Thesis:</strong> Reinforcement Learning for Docking System</p>
-      <p><strong>Focus:</strong> Autonomous ship docking system.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rinadewi-ai" target="_blank" rel="noopener noreferrer">rinadewi-ai</a></p>
-    </div>
-  </div>
-
-  <div id="modal3" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal3')">&times;</span>
-      <h2>Faris Taruna</h2>
-      <p><strong>Email:</strong> faris@example.com</p>
-      <p><strong>Project:</strong> Trash Skimmer Boat</p>
-      <p><strong>Focus:</strong> Autonomous trash collection in rivers.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/faristaruna" target="_blank" rel="noopener noreferrer">faristaruna</a></p>
-    </div>
-  </div>
-
-  <div id="modal4" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal4')">&times;</span>
-      <h2>Alya Putri</h2>
-      <p><strong>Email:</strong> alya@example.com</p>
-      <p><strong>Project:</strong> Shipboard Fire Detector</p>
-      <p><strong>Focus:</strong> IoT fire detection for maritime.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/alyaputri" target="_blank" rel="noopener noreferrer">alyaputri</a></p>
-    </div>
-  </div>
-
-  <div id="modal5" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal5')">&times;</span>
-      <h2>Yusuf Hamka</h2>
-      <p><strong>Email:</strong> yusuf@example.com</p>
-      <p><strong>Project:</strong> Biofouling Crawler</p>
-      <p><strong>Focus:</strong> Marine surface cleaning robot.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yusufhamka" target="_blank" rel="noopener noreferrer">yusufhamka</a></p>
-    </div>
-  </div>
-
-  <div id="modal6" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal6')">&times;</span>
-      <h2>Bela Anggraini</h2>
-      <p><strong>Email:</strong> bela@example.com</p>
-      <p><strong>Project:</strong> Wall-Climbing Robot</p>
-      <p><strong>Focus:</strong> Vertical hull maintenance robot.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/belaanggraini" target="_blank" rel="noopener noreferrer">belaanggraini</a></p>
-    </div>
-  </div>
-
-  <div id="modal7" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('modal7')">&times;</span>
-      <h2>Dimas Ardi</h2>
-      <p><strong>Email:</strong> dimas@example.com</p>
-      <p><strong>Project:</strong> Ship Hull Inspection Tool</p>
-      <p><strong>Focus:</strong> Visual detection for hull cracks.</p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/dimasardi" target="_blank" rel="noopener noreferrer">dimasardi</a></p>
-    </div>
-  </div>
-
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = "block";
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = "none";
-    }
-    window.onclick = function(event) {
-      document.querySelectorAll('.modal').forEach(modal => {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      });
-    }
-  </script>
-</body>
-</html>
+      <span
