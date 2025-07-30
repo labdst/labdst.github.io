@@ -148,7 +148,7 @@
           <img src="ikhsan.png" alt="M. Ikhsan">
         </div>
         <h3>M. Ikhsan</h3>
-        <p>Intelligent Control of Hybrid Propulsion</p>
+        <p>Performance Analysis of Autonomous Control System Based on Cable-Path Following in a Hybrid Controlled Underwater Vehicle Using 3D Simulation</p>
       </div>
 
       <div class="student-card" onclick="openModal('modal2')">
@@ -203,4 +203,42 @@
   <!-- Modal Templates -->
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <span
+      <span class="close" onclick="closeModal('modal1')">&times;</span>
+      <h2>M. Ikhsan</h2>
+      <p><strong>Email:</strong> ikhsan@example.com</p>
+      <p><strong>Thesis:</strong> Intelligent Control of Hybrid Propulsion System</p>
+      <p><strong>Focus:</strong> Adaptive energy optimization in hybrid vessels</p>
+      <p><strong>LinkedIn:</strong> <a href="www.linkedin.com/in/ikhsansur" target="_blank" rel="noopener noreferrer">ikhsan-marine</a></p>
+    </div>
+  </div>
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal2')">&times;</span>
+      <h2>Rina Dewi</h2>
+      <p><strong>Email:</strong> rina@example.com</p>
+      <p><strong>Thesis:</strong> Reinforcement Learning for Docking System</p>
+      <p><strong>Focus:</strong> AI-based autonomous ship docking</p>
+      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rinadewi-ai" target="_blank" rel="noopener noreferrer">rinadewi-ai</a></p>
+    </div>
+  </div>
+
+  <!-- Tambahkan modal lainnya di sini dengan ID modal3–modal7 -->
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    window.onclick = function(event) {
+      document.querySelectorAll('.modal').forEach(modal => {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
