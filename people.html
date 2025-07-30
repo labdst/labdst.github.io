@@ -40,20 +40,28 @@
       display: inline-block;
       padding-bottom: 5px;
     }
+
     .student-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      gap: 30px;
       justify-content: center;
-      gap: 40px;
       margin-top: 30px;
     }
+    .grid-2col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-5col {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      max-width: 1000px;
+      margin: auto;
+    }
+
     .student-card {
-      width: 200px;
       cursor: pointer;
     }
     .student-card img {
-      width: 150px;
-      height: 150px;
+      width: 130px;
+      height: 130px;
       object-fit: cover;
       border-radius: 50%;
       border: 3px solid #004080;
@@ -64,6 +72,7 @@
     .student-card p {
       font-size: 0.9em;
       color: #444;
+      margin: 0;
     }
 
     /* Modal */
@@ -112,43 +121,67 @@
     <h1>Our Students</h1>
 
     <h2>Master Students</h2>
-    <div class="student-grid">
+    <div class="student-grid grid-2col">
       <div class="student-card" onclick="openModal('modal1')">
-        <img src="master1.jpg" alt="Student Photo">
+        <img src="8a6750bc-6dce-460b-8e09-624bab593a93.png" alt="M. Ikhsan">
         <h3>M. Ikhsan</h3>
         <p>Thesis: Intelligent Control of Hybrid Propulsion System</p>
+      </div>
+      <div class="student-card" onclick="openModal('modal2')">
+        <img src="master2.jpg" alt="Rina Dewi">
+        <h3>Rina Dewi</h3>
+        <p>Thesis: Reinforcement Learning for Docking System</p>
       </div>
     </div>
 
     <h2>Undergraduate Students</h2>
-    <div class="student-grid">
-      <div class="student-card" onclick="openModal('modal2')">
-        <img src="ugrad1.jpg" alt="Student Photo">
+    <div class="student-grid grid-5col">
+      <div class="student-card">
+        <img src="ugrad1.jpg" alt="Faris Taruna">
         <h3>Faris Taruna</h3>
-        <p>Final Project: Trash Skimmer Boat with Solar Energy</p>
+        <p>Final Project: Trash Skimmer Boat</p>
+      </div>
+      <div class="student-card">
+        <img src="ugrad2.jpg" alt="Alya Putri">
+        <h3>Alya Putri</h3>
+        <p>Final Project: Shipboard Fire Detector</p>
+      </div>
+      <div class="student-card">
+        <img src="ugrad3.jpg" alt="Yusuf Hamka">
+        <h3>Yusuf Hamka</h3>
+        <p>Final Project: Biofouling Crawler</p>
+      </div>
+      <div class="student-card">
+        <img src="ugrad4.jpg" alt="Bela Anggraini">
+        <h3>Bela Anggraini</h3>
+        <p>Final Project: Wall-Climbing Robot</p>
+      </div>
+      <div class="student-card">
+        <img src="ugrad5.jpg" alt="Dimas Ardi">
+        <h3>Dimas Ardi</h3>
+        <p>Final Project: Ship Hull Inspection Tool</p>
       </div>
     </div>
   </main>
 
-  <!-- Modal 1 -->
+  <!-- Modal for Master Students -->
   <div id="modal1" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal1')">&times;</span>
-      <h2>Aditya Putra</h2>
-      <p><strong>Email:</strong> aditya.putra@example.com</p>
+      <h2>M. Ikhsan</h2>
+      <p><strong>Email:</strong> ikhsan@example.com</p>
       <p><strong>Thesis:</strong> Intelligent Control of Hybrid Propulsion System</p>
-      <p><strong>Research Topic:</strong> Optimal energy management for green shipping using reinforcement learning.</p>
+      <p><strong>Research Focus:</strong> Optimization of energy usage using adaptive control algorithms in marine vessels.</p>
     </div>
   </div>
 
-  <!-- Modal 2 -->
   <div id="modal2" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('modal2')">&times;</span>
-      <h2>Ayu Maharani</h2>
-      <p><strong>Email:</strong> ayu.maharani@example.com</p>
-      <p><strong>Final Project:</strong> Trash Skimmer Boat with Solar Energy</p>
-      <p><strong>Research Topic:</strong> Design of eco-friendly autonomous surface vehicles for waste collection in rivers.</p>
+      <h2>Rina Dewi</h2>
+      <p><strong>Email:</strong> rina.dewi@example.com</p>
+      <p><strong>Thesis:</strong> Reinforcement Learning for Docking System</p>
+      <p><strong>Research Focus:</strong> Intelligent autonomous docking for smart port integration.</p>
     </div>
   </div>
 
@@ -169,4 +202,3 @@
   </script>
 </body>
 </html>
-
