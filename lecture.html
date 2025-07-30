@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lecturer - DST Lab</title>
+  <title>Lecture - DST Lab</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
       text-align: center;
     }
 
     header img {
       width: 100%;
-      max-height: 250px;
+      max-height: 300px;
       object-fit: contain;
     }
 
@@ -41,58 +40,51 @@
       color: #004080;
     }
 
-    .lecturer-section {
-      display: flex;
+    h2 {
+      margin-top: 50px;
+      border-bottom: 2px solid #004080;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .lecturer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 30px;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-bottom: 50px;
+      max-width: 1200px;
+      margin: 40px auto;
     }
 
     .lecturer-card {
-      width: 250px;
+      text-align: center;
     }
 
-    .circle-img {
-      width: 150px;
-      height: 150px;
+    .image-wrapper {
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid #004080;
       margin: auto;
     }
 
-    .circle-img img {
+    .image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
     .lecturer-card h3 {
-      margin: 10px 0 5px;
+      margin: 10px 0 0;
     }
 
-    .lecturer-card p {
-      font-size: 0.9em;
-      color: #444;
-      margin: 0;
-    }
-
-    .course-list, .mooc-list {
+    .section {
+      margin-top: 60px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
       text-align: left;
-      max-width: 800px;
-      margin: auto;
-      margin-top: 30px;
-    }
-
-    .course-list ul, .mooc-list ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .course-list li, .mooc-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid #ccc;
     }
   </style>
 </head>
@@ -110,31 +102,56 @@
   </nav>
 
   <main>
-    <h1>Lecturer</h1>
-    <div class="lecturer-section">
+    <h1>Our Lecturers</h1>
+
+    <div class="lecturer-grid">
       <div class="lecturer-card">
-        <div class="circle-img">
-          <img src="images/lecturer/adi.jpg" alt="Adi Novitarini Putri">
+        <div class="image-wrapper">
+          <img src="images/lecturers/adi.jpg" alt="Adi Novitarini Putri">
         </div>
         <h3>Adi Novitarini Putri</h3>
-        <p>Department of Naval Architecture, ITS</p>
+      </div>
+      <div class="lecturer-card">
+        <div class="image-wrapper">
+          <img src="images/lecturers/dosen2.jpg" alt="Dosen 2">
+        </div>
+        <h3>Dosen 2</h3>
+      </div>
+      <div class="lecturer-card">
+        <div class="image-wrapper">
+          <img src="images/lecturers/dosen3.jpg" alt="Dosen 3">
+        </div>
+        <h3>Dosen 3</h3>
+      </div>
+      <div class="lecturer-card">
+        <div class="image-wrapper">
+          <img src="images/lecturers/dosen4.jpg" alt="Dosen 4">
+        </div>
+        <h3>Dosen 4</h3>
+      </div>
+      <div class="lecturer-card">
+        <div class="image-wrapper">
+          <img src="images/lecturers/dosen5.jpg" alt="Dosen 5">
+        </div>
+        <h3>Dosen 5</h3>
       </div>
     </div>
 
-    <h2>Courses</h2>
-    <div class="course-list">
+    <div class="section">
+      <h2>Courses</h2>
       <ul>
-        <li>Basic Ship Design</li>
-        <li>Control Systems</li>
-        <li>Digital and System Engineering</li>
-        <li>Autonomous Ship Technology</li>
+        <li>Control System Design</li>
+        <li>Underwater Robotics</li>
+        <li>Embedded Systems</li>
+        <li>Ship Digitalization</li>
       </ul>
     </div>
 
-    <h2>MOOC</h2>
-    <div class="mooc-list">
+    <div class="section">
+      <h2>MOOC</h2>
       <ul>
-        <li><a href="#" target="_blank">Intelligent Control System for Maritime Industry (Coming Soon)</a></li>
+        <li><a href="#" target="_blank">Introduction to Smart Ship Systems</a></li>
+        <li><a href="#" target="_blank">Intelligent Control in Maritime Robotics</a></li>
       </ul>
     </div>
   </main>
