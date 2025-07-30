@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lecture - DST Lab</title>
+  <title>Lecturer - DST Lab</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,37 +10,89 @@
       padding: 0;
       text-align: center;
     }
+
     header img {
       width: 100%;
-      max-height: 300px;
+      max-height: 250px;
       object-fit: contain;
     }
+
     nav {
       background-color: #004080;
       padding: 10px 0;
     }
+
     nav a {
       color: white;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     main {
-      padding: 30px;
+      padding: 40px 20px;
+    }
+
+    h1, h2 {
+      color: #004080;
+    }
+
+    .lecturer-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .lecturer-card {
+      width: 250px;
+    }
+
+    .circle-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #004080;
+      margin: auto;
+    }
+
+    .circle-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lecturer-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .lecturer-card p {
+      font-size: 0.9em;
+      color: #444;
+      margin: 0;
+    }
+
+    .course-list, .mooc-list {
       text-align: left;
       max-width: 800px;
       margin: auto;
+      margin-top: 30px;
     }
-    section {
-      margin-bottom: 30px;
+
+    .course-list ul, .mooc-list ul {
+      list-style: none;
+      padding: 0;
     }
-    h2 {
-      color: #004080;
-      border-bottom: 2px solid #004080;
-      padding-bottom: 5px;
+
+    .course-list li, .mooc-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #ccc;
     }
   </style>
 </head>
@@ -58,30 +110,33 @@
   </nav>
 
   <main>
-    <h1>Lecture & Teaching</h1>
+    <h1>Lecturer</h1>
+    <div class="lecturer-section">
+      <div class="lecturer-card">
+        <div class="circle-img">
+          <img src="images/lecturer/adi.jpg" alt="Adi Novitarini Putri">
+        </div>
+        <h3>Adi Novitarini Putri</h3>
+        <p>Department of Naval Architecture, ITS</p>
+      </div>
+    </div>
 
-    <section>
-      <h2>Undergraduate Courses</h2>
+    <h2>Courses</h2>
+    <div class="course-list">
       <ul>
-        <li>Ship Design and Construction (TKP-3103)</li>
-        <li>Basic Naval Architecture (TKP-2101)</li>
-        <li>Marine Robotics Fundamentals</li>
+        <li>Basic Ship Design</li>
+        <li>Control Systems</li>
+        <li>Digital and System Engineering</li>
+        <li>Autonomous Ship Technology</li>
       </ul>
-    </section>
+    </div>
 
-    <section>
-      <h2>Postgraduate Courses</h2>
+    <h2>MOOC</h2>
+    <div class="mooc-list">
       <ul>
-        <li>Intelligent Control Systems</li>
-        <li>Maritime Cyber-Physical Systems</li>
+        <li><a href="#" target="_blank">Intelligent Control System for Maritime Industry (Coming Soon)</a></li>
       </ul>
-    </section>
-
-    <section>
-      <h2>Online Materials</h2>
-      <p>You can access MOOC content on our <a href="#">YouTube Channel</a> or internal <a href="#">Edunex Portal</a>.</p>
-    </section>
+    </div>
   </main>
 </body>
 </html>
-
