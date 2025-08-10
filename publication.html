@@ -1,1 +1,96 @@
+# Recreate the SOP HTML (with the embedded RLM diagram) as a standalone file
+import base64
+
+# Encode diagram image
+img_path = "/mnt/data/75ad072b-585c-4a5e-a17f-feb9718fd9d3.png"
+with open(img_path, "rb") as f:
+    b64 = base64.b64encode(f.read()).decode("ascii")
+data_uri = f"data:image/png;base64,{b64}"
+
+html = f"""<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOP Pelaporan Penelitian - Laboratorium TKD ITS</title>
+  <style>
+    :root{{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--brand-2:#0369a1;--card:#ffffff;--border:#e2e8f0}}
+    html,body{{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.6 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}}
+    .container{{max-width:1000px;margin:48px auto;padding:0 20px}}
+    header{{margin-bottom:24px}}
+    h1{{margin:0 0 4px 0;font-size:28px;font-weight:800;letter-spacing:.2px}}
+    .subtitle{{color:var(--muted);margin:0 0 16px 0}}
+    .card{{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}}
+    h2{{font-size:20px;margin:0 0 8px 0}}
+    h3{{font-size:16px;margin:12px 0 6px 0;color:var(--brand-2)}}
+    .meta{{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px}}
+    a{{color:var(--brand);text-decoration:none}}
+    a:hover{{text-decoration:underline}}
+    table{{width:100%;border-collapse:collapse;margin:8px 0 0 0}}
+    th,td{{border:1px solid var(--border);padding:10px;vertical-align:top}}
+    th{{background:#f1f5f9;text-align:left}}
+    .btnbar{{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}}
+    .btn{{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer}}
+    .btn.primary{{background:var(--brand);border-color:var(--brand);color:#fff}}
+    .note{{font-size:14px;color:var(--muted)}}
+    @media print{{.btnbar{{display:none}}body{{background:#fff}}.card{{box-shadow:none;border-color:#bbb}}}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>SOP Pelaporan Penelitian</h1>
+      <p class="subtitle">Laboratorium Teknologi Kapal Digital (TKD) · Departemen Teknik Perkapalan · ITS</p>
+      <div class="btnbar">
+        <button class="btn primary" onclick="window.print()">Cetak / Simpan PDF</button>
+        <a class="btn" href="https://labdst.github.io/index.html" target="_blank" rel="noopener">Buka Website Lab</a>
+      </div>
+    </header>
+
+    <section class="card" style="text-align:center">
+      <h2>Diagram Research Lifecycle Management</h2>
+      <p class="note">Siklus SOP pelaporan: Plan → Execute → Process → Report → Disseminate → Preserve.</p>
+      <img src="{data_uri}" alt="Research Lifecycle Management Diagram" style="max-width:520px;width:100%;height:auto;border-radius:12px;border:1px solid #e2e8f0;"/>
+    </section>
+
+    <section class="card">
+      <h2>1. Tujuan</h2>
+      <ul>
+        <li>Menstandarkan proses pelaporan hasil penelitian di Laboratorium TKD.</li>
+        <li>Meningkatkan akuntabilitas, keterlacakan (<em>traceability</em>), dan kualitas dokumentasi riset.</li>
+        <li>Mendukung integrasi sistem pelaporan digital untuk keberlanjutan dan kolaborasi riset.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>2. Ruang Lingkup</h2>
+      <ul>
+        <li>Tugas akhir mahasiswa (S1, S2, S3), penelitian dosen, dan proyek kolaborasi.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>3. Prosedur (RLM)</h2>
+      <table>
+        <thead>
+          <tr><th>Tahap</th><th>Deskripsi</th><th>Penanggung Jawab</th><th>Output</th><th>Tools</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Perencanaan</strong></td><td>Proposal; tujuan, metodologi, jadwal, luaran.</td><td>Peneliti & Pembimbing</td><td>Proposal</td><td>Template TKD</td></tr>
+          <tr><td><strong>Pelaksanaan</strong></td><td>Eksperimen/pengumpulan data; logbook & dokumentasi.</td><td>Peneliti & Tim</td><td>Logbook</td><td>Logbook digital</td></tr>
+          <tr><td><strong>Pengolahan & Analisis</strong></td><td>Pembersihan, verifikasi, analisis data, validasi.</td><td>Peneliti</td><td>Dataset & hasil analisis</td><td>Python/MATLAB</td></tr>
+          <tr><td><strong>Pelaporan</strong></td><td>Laporan sesuai format SOP; data mentah & visualisasi.</td><td>Peneliti</td><td>Draft laporan</td><td>Template TKD</td></tr>
+          <tr><td><strong>Review & Validasi</strong></td><td>Peer review internal & persetujuan pembimbing.</td><td>Pembimbing</td><td>Laporan final</td><td>Sistem review</td></tr>
+          <tr><td><strong>Diseminasi</strong></td><td>Unggah ke website lab & halaman proyek.</td><td>Peneliti & Admin</td><td>Laporan online</td><td>labdst.github.io</td></tr>
+          <tr><td><strong>Arsip & Keberlanjutan</strong></td><td>Arsip cloud/ITS; tautkan ke LinkedIn penulis.</td><td>Admin Lab</td><td>Arsip & link LinkedIn</td><td>Cloud/Repository</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <p>© 2025 Laboratorium Teknologi Kapal Digital (TKD) – ITS.</p>
+    </footer>
+  </div>
+</body>
+</html>
 
