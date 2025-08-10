@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Lab DST – Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--border:#e2e8f0}
     html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Arial}
-    /* placeholder tinggi header sebelum header.html termuat */
+
+    /* Placeholder tinggi header sebelum header.html ter-load */
     #site-header{min-height:64px;background:#004080}
+
     .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
 
+    /* HERO */
     .hero{display:grid;gap:14px;align-items:center;margin:12px 0 28px}
-    .hero img{width:100%;max-height:280px;object-fit:contain;background:#fff;border:1px solid var(--border);border-radius:14px}
-    .hero h1{margin:0;font-size:28px}
-    .hero p{margin:0;color:var(--muted)}
+    .hero__img{
+      width:100%;max-height:280px;object-fit:contain;
+      background:#fff;border:1px solid var(--border);border-radius:14px
+    }
+    .hero__title{margin:0;font-size:28px}
+    .hero__sub{margin:0;color:var(--muted)}
 
+    /* CARD */
     .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
     h2{margin:0 0 10px;font-size:22px}
-    .rlm-grid{display:grid;gap:10px}
+
+    /* RLM grid */
+    .rlm-grid{display:grid;gap:16px}
     @media(min-width:860px){.rlm-grid{grid-template-columns:1.1fr 1fr}}
 
     ul.check{margin:6px 0 0 20px;padding:0}
     ul.check li{margin:6px 0}
 
+    /* Gambar RLM aman & responsif */
+    .rlm-figure{display:flex;align-items:center;justify-content:center}
+    .rlm-figure img{
+      width:100%;max-width:520px;max-height:360px;height:auto;
+      object-fit:contain;border:1px solid var(--border);border-radius:14px;background:#fff
+    }
+
+    /* Tombol */
     .btnbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
     .btn{appearance:none;border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;text-decoration:none}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
@@ -32,7 +49,7 @@
 </head>
 <body>
 
-<!-- header bersama -->
+<!-- Header bersama -->
 <div id="site-header"></div>
 <script>
   fetch("header.html",{cache:"no-store"})
@@ -44,10 +61,11 @@
 <main class="wrap">
   <!-- HERO -->
   <section class="hero">
-    <img src="Logo%20TKD%20Transparan.png" alt="Digital Ship Technology Laboratory">
+    <!-- Jika file logo ada di root & namanya pakai spasi, encode %20 -->
+    <img class="hero__img" src="Logo%20TKD%20Transparan.png" alt="Digital Ship Technology Laboratory">
     <div>
-      <h1>Welcome to Digital Ship Technology Lab</h1>
-      <p>Riset kapal digital, automasi maritim, dan robotics di Departemen Teknik Perkapalan – ITS.</p>
+      <h1 class="hero__title">Welcome to Digital Ship Technology Lab</h1>
+      <p class="hero__sub">Riset kapal digital, automasi maritim, dan robotics – Departemen Teknik Perkapalan, ITS.</p>
     </div>
   </section>
 
@@ -56,7 +74,7 @@
     <h2>Research Lifecycle Management (RLM) di DST Lab</h2>
     <div class="rlm-grid">
       <div>
-        <p>Kami mengelola riset berbasis siklus RLM agar pelaporan, diseminasi, dan pelestarian data berjalan rapi dan berkelanjutan.</p>
+        <p>Kami menerapkan siklus RLM agar perencanaan, pelaksanaan, pelaporan, diseminasi, dan pelestarian data riset berjalan rapi dan berkelanjutan.</p>
         <ul class="check">
           <li><b>Plan</b> – tujuan, metodologi, jadwal, &amp; target luaran.</li>
           <li><b>Execute</b> – eksperimen/pengumpulan data + logbook.</li>
@@ -67,7 +85,7 @@
         </ul>
 
         <div class="btnbar">
-          <!-- ganti URL form kalau perlu -->
+          <!-- Ganti URL form jika perlu -->
           <a class="btn primary" target="_blank" rel="noopener"
              href="https://docs.google.com/forms/d/e/1FAIpQLSe0y1wQtXM8bdjwhpszl7dA8hyEtEmGl8O6FDSiT-YyZCn-kQ/viewform?usp=dialog">
             Isi / Update Pekerjaan (Google Form)
@@ -78,8 +96,9 @@
         <p class="note">Isian form otomatis masuk Google Sheets dan tampil di halaman <em>Research Lifecycle Tracker</em>.</p>
       </div>
 
-      <div>
-        <img src="images/RLM_TKD.png" alt="RLM Diagram">
+      <div class="rlm-figure">
+        <!-- Jika gambar ada di folder lain, sesuaikan path -->
+        <img src="images/RLM_TKD.png" alt="RLM Diagram" loading="lazy">
       </div>
     </div>
   </section>
