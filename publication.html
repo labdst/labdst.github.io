@@ -1,46 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOP Pelaporan Penelitian TKD</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-        }
-        h1, h2 {
-            color: #004080;
-        }
-        img {
-            display: block;
-            margin: 20px auto;
-            max-width: 500px;
-        }
-        ol {
-            margin-left: 20px;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Research Lifecycle Tracker – TKD ITS</title>
+<style>
+  :root{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--border:#e2e8f0}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Arial}
+  .wrap{max-width:1100px;margin:36px auto;padding:0 16px}
+  h1{margin:0 0 8px;font-size:26px}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .rlm{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 18px}
+  .phase{padding:10px 14px;border:1px solid var(--border);border-radius:999px;background:#fff;cursor:pointer}
+  .phase.active{background:var(--brand);border-color:var(--brand);color:#fff}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
+  .filters input,.filters select{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff}
+  .grid{display:grid;gap:12px}
+  @media(min-width:860px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px}
+  .title{font-weight:700;margin:0 0 4px}
+  .meta{font-size:13px;color:var(--muted);margin:2px 0 8px}
+  .tag{display:inline-block;background:#eef2ff;border:1px solid #c7d2fe;padding:2px 8px;border-radius:999px;font-size:12px;margin-right:6px}
+  .empty{color:var(--muted);padding:20px;border:1px dashed var(--border);border-radius:12px;background:#fff}
+  .topbar{display:flex;justify-content:space-between;gap:10px;align-items:center}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .note{color:var(--muted);font-size:13px;margin-top:8px}
+</style>
 </head>
 <body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>Research Lifecycle Tracker</h1>
+      <p class="sub">Klik fase di bawah untuk melihat pekerjaan tiap mahasiswa. Sumber data: Google Sheets (publish CSV).</p>
+    </div>
+    <div><a href="images/RLM_TKD.png" target="_blank">Lihat Diagram RLM</a></div>
+  </div>
 
-    <h1>SOP Pelaporan Penelitian TKD</h1>
+  <!-- Phases -->
+  <div class="rlm" id="phases">
+    <button class="phase" data-phase="Plan">Plan</button>
+    <button class="phase" data-phase="Execute">Execute</button>
+    <button class="phase" data-phase="Process">Process</button>
+    <button class="phase" data-phase="Report">Report</button>
+    <button class="phase" data-phase="Disseminate">Disseminate</button>
+    <button class="phase" data-phase="Preserve">Preserve</button>
+  </div>
 
-    <h2>Model Research Lifecycle Management</h2>
-    <img src="images/RLM_TKD.png" alt="Research Lifecycle Management TKD">
+  <!-- Filters -->
+  <div class="filters">
+    <input type="search" id="q" placeholder="Cari nama/judul/pekerjaan…" />
+    <select id="advisor"><option value="">Pembimbing (semua)</option></select>
+    <select id="program">
+      <option value="">Program (semua)</option>
+      <option>S1</option><option>S2</option><option>S3</option>
+    </select>
+  </div>
 
-    <h2>Langkah-langkah SOP</h2>
-    <ol>
-        <li><strong>Plan</strong> – Menyusun rencana penelitian, termasuk tujuan, metode, jadwal, dan kebutuhan sumber daya.</li>
-        <li><strong>Execute</strong> – Melaksanakan kegiatan penelitian sesuai rencana yang telah disusun.</li>
-        <li><strong>Process</strong> – Mengolah data hasil penelitian menggunakan metode analisis yang tepat.</li>
-        <li><strong>Report</strong> – Menyusun laporan penelitian sesuai format yang berlaku dan standar akademik.</li>
-        <li><strong>Disseminate</strong> – Mempublikasikan hasil penelitian melalui jurnal, seminar, atau media lainnya.</li>
-        <li><strong>Preserve</strong> – Mengarsipkan data dan dokumen penelitian di repositori digital untuk keberlanjutan dan kemudahan akses di masa depan.</li>
-    </ol>
+  <div class="grid" id="list"></div>
+  <p class="note">Tips: Edit data via Google Form, otomatis masuk Sheet & terupdate di sini (± beberapa detik tergantung cache).</p>
+</div>
 
-    <p><em>Catatan:</em> Setiap tahap harus didokumentasikan untuk memastikan transparansi, akuntabilitas, dan keberlanjutan penelitian di lingkungan Laboratorium Digital Ship Technology ITS.</p>
+<script>
+// === KONFIGURASI ===
+const CSV_URL = "PASTE_GOOGLE_SHEETS_PUBLISH_CSV_URL_HERE";
 
+// === UTIL CSV PARSER (ringan) ===
+function parseCSV(text){
+  const rows = [];
+  let cur = '', row = [], inQuotes = false;
+  for (let i=0;i<text.length;i++){
+    const c = text[i], n = text[i+1];
+    if (inQuotes){
+      if (c === '"' && n === '"'){ cur += '"'; i++; }
+      else if (c === '"'){ inQuotes = false; }
+      else cur += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ','){ row.push(cur.trim()); cur=''; }
+      else if (c === '\n'){ row.push(cur.trim()); rows.push(row); row=[]; cur=''; }
+      else cur += c;
+    }
+  }
+  if (cur.length || row.length) { row.push(cur.trim()); rows.push(row); }
+  return rows;
+}
+
+// === STATE ===
+let ALL = [];
+let currentPhase = "Plan";
+
+// === DOM HOOKS ===
+const phasesEl = document.getElementById('phases');
+const listEl   = document.getElementById('list');
+const qEl      = document.getElementById('q');
+const advEl    = document.getElementById('advisor');
+const progEl   = document.getElementById('program');
+
+// === RENDER ===
+function render(){
+  // phase buttons
+  [...phasesEl.querySelectorAll('.phase')].forEach(b=>{
+    b.classList.toggle('active', b.dataset.phase===currentPhase);
+  });
+
+  // filter
+  const q = qEl.value.toLowerCase();
+  const adv = advEl.value;
+  const prog = progEl.value;
+
+  const filtered = ALL.filter(x =>
+    (x.Fase===currentPhase) &&
+    (!q || (x.Nama+x.Judul+x.Pekerjaan).toLowerCase().includes(q)) &&
+    (!adv || x.Pembimbing===adv) &&
+    (!prog || x.Program===prog)
+  );
+
+  if (!filtered.length){
+    listEl.innerHTML = `<div class="empty">Belum ada entri untuk fase <b>${currentPhase}</b>.</div>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(x => `
+    <div class="card">
+      <div class="title">${x.Nama} ${x.LinkedIn ? `— <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
+      <div class="meta">
+        <span class="tag">${x.Program || '-'}</span>
+        <span class="tag">${x.Pembimbing || '-'}</span>
+        <span class="tag">${x.Progress ? (x.Progress+'%') : 'Progress -'}</span>
+        <span class="tag">${x.Tanggal || '-'}</span>
+      </div>
+      <div class="meta"><b>Judul:</b> ${x.Judul || '-'}</div>
+      <div><b>Pekerjaan:</b> ${x.Pekerjaan || '-'}</div>
+    </div>
+  `).join('');
+}
+
+// === DATA MAPPING ===
+// Ubah nama kolom di sini agar match dengan header di Google Sheets
+function rowToObj(header, r){
+  const idx = name => header.indexOf(name);
+  return {
+    Timestamp : r[idx('Timestamp')] || r[idx('Waktu')] || '',
+    Nama      : r[idx('Nama')] || '',
+    Program   : r[idx('Program')] || '',
+    Pembimbing: r[idx('Pembimbing')] || '',
+    Judul     : r[idx('Judul Riset')] || r[idx('Judul')] || '',
+    Fase      : (r[idx('Fase')] || '').replace(/\s+/g,'').replace(/^\w/,c=>c.toUpperCase()), // normalisasi
+    Pekerjaan : r[idx('Pekerjaan / Update')] || r[idx('Update')] || '',
+    Progress  : r[idx('Progress (%)')] || '',
+    Tanggal   : r[idx('Tanggal Update')] || '',
+    LinkedIn  : r[idx('LinkedIn URL')] || r[idx('LinkedIn')] || ''
+  };
+}
+
+// === LOAD CSV ===
+async function loadCSV(){
+  const res = await fetch(CSV_URL, {cache:'no-store'});
+  const text = await res.text();
+  const rows = parseCSV(text);
+  const header = rows.shift();
+  ALL = rows.map(r => rowToObj(header, r)).filter(x=>x.Nama || x.Judul);
+  // isi pilihan pembimbing unik
+  const advisors = [...new Set(ALL.map(x=>x.Pembimbing).filter(Boolean))].sort();
+  advEl.innerHTML = `<option value="">Pembimbing (semua)</option>` + advisors.map(a=>`<option>${a}</option>`).join('');
+  render();
+}
+
+// === EVENTS ===
+phasesEl.addEventListener('click', e=>{
+  const b = e.target.closest('.phase'); if(!b) return;
+  currentPhase = b.dataset.phase; render();
+});
+[qEl, advEl, progEl].forEach(el=>el.addEventListener('input', render));
+
+// === INIT ===
+loadCSV().catch(err=>{
+  listEl.innerHTML = `<div class="empty">Gagal memuat data. Cek URL CSV & izin publik.</div>`;
+  console.error(err);
+});
+</script>
 </body>
 </html>
