@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOP Pelaporan Kegiatan Riset – DST Lab</title>
+<style>
+  :root{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--border:#e2e8f0}
+  html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Arial}
+  #site-header{min-height:64px;background:#004080}
+  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+  h1{margin:0 0 4px;font-size:28px}
+  .sub{color:var(--muted);margin:0 0 16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+  h2{margin:0 0 10px;font-size:22px}
+  h3{margin:10px 0 6px;font-size:18px}
+  ul{margin:6px 0 0 20px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+  .btnbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .btn{appearance:none;border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 14px;text-decoration:none;cursor:pointer}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  .note{color:var(--muted);font-size:14px}
+  .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin-right:6px;font-size:12px;background:#fff}
+  .kbd{font-family:ui-monospace,Menlo,Consolas,monospace;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:2px 6px}
+  details{border:1px solid var(--border);border-radius:10px;background:#fff;padding:12px;margin:10px 0}
+  details>summary{cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- header bersama (opsional). Hapus blok ini jika tidak pakai header.html -->
+<div id="site-header"></div>
+<script>
+  fetch("header.html",{cache:"no-store"})
+    .then(r=>r.text()).then(h=>{document.getElementById("site-header").outerHTML=h})
+    .catch(()=>{ /* ignore if header.html not found */ });
+</script>
+
+<main class="wrap">
+  <header>
+    <h1>SOP Pelaporan Kegiatan Riset</h1>
+    <p class="sub">Digital Ship Technology Laboratory – Departemen Teknik Perkapalan, ITS</p>
+    <div class="btnbar">
+      <a class="btn primary" target="_blank" rel="noopener"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSe0y1wQtXM8bdjwhpszl7dA8hyEtEmGl8O6FDSiT-YyZCn-kQ/viewform?usp=dialog">Isi / Update Pekerjaan (Google Form)</a>
+      <a class="btn" href="publication.html">Lihat Tracker RLM</a>
+      <a class="btn" href="images/RLM_TKD.png" target="_blank" rel="noopener">Diagram RLM</a>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>Tujuan & Ruang Lingkup</h2>
+    <p>Menjamin seluruh kegiatan riset terdokumentasi konsisten, mudah ditelusuri, dan siap untuk evaluasi, publikasi, serta preservasi sesuai pendekatan <b>Research Lifecycle Management (RLM)</b>.</p>
+    <p><span class="pill">Berlaku untuk</span> mahasiswa, asisten riset, dosen, dan seluruh anggota lab yang terlibat dalam riset.</p>
+  </section>
+
+  <section class="card">
+    <h2>Ringkasan RLM (Research Lifecycle)</h2>
+    <div class="grid">
+      <div>
+        <ul>
+          <li><b>Plan</b> – tujuan, metodologi, jadwal & target luaran.</li>
+          <li><b>Execute</b> – eksperimen/pengumpulan data & logbook.</li>
+          <li><b>Process</b> – pembersihan, validasi & analisis data.</li>
+          <li><b>Report</b> – penyusunan laporan sesuai SOP lab.</li>
+          <li><b>Disseminate</b> – publikasi/website/jurnal/konferensi.</li>
+          <li><b>Preserve</b> – arsip digital & keterhubungan profil penulis (LinkedIn) untuk keberlanjutan.</li>
+        </ul>
+      </div>
+      <div>
+        <img src="images/RLM_TKD.png" alt="Diagram RLM" style="width:100%;max-width:520px;max-height:360px;object-fit:contain;border:1px solid #e2e8f0;border-radius:14px;background:#fff">
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Prosedur Pelaporan per Fase</h2>
+
+    <details open>
+      <summary>Plan</summary>
+      <ul>
+        <li>Isi <b>Google Form</b> (judul/topik, metodologi singkat, rencana jadwal, target luaran).</li>
+        <li>Unggah dokumen rencana ke folder bersama <span class="kbd">/Riset/&lt;Tahun&gt;/&lt;Nama&gt;/Plan/</span>.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Execute</summary>
+      <ul>
+        <li>Laporkan perkembangan minimal <b>mingguan</b> lewat Form (ringkas & bukti kegiatan bila ada).</li>
+        <li>Simpan data mentah di <span class="kbd">/Riset/&lt;Tahun&gt;/&lt;Nama&gt;/DataRaw/</span>.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Process</summary>
+      <ul>
+        <li>Unggah berkas pembersihan/validasi/analisis ke <span class="kbd">/Processed/</span>.</li>
+        <li>Catat alat/skrip yang digunakan (link repo bila ada).</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Report</summary>
+      <ul>
+        <li>Tulis laporan sesuai <b>template lab</b> (Word/LaTeX) dan unggah ke <span class="kbd">/Reports/</span>.</li>
+        <li>Kirim ringkasan bulanan ke pembimbing.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Disseminate</summary>
+      <ul>
+        <li>Catat status kirim/diterima (accepted) dan link publikasi/DOI.</li>
+        <li>Perbarui luaran di website lab.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Preserve</summary>
+      <ul>
+        <li>Arsipkan <b>data akhir, skrip, laporan,</b> dan <b>tautan publikasi</b> ke Form.</li>
+        <li>Tambahkan tautan profil penulis (LinkedIn/Scholar) untuk keberlanjutan.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Penamaan Berkas & Struktur Folder</h2>
+    <p>Pola nama file: <span class="kbd">YYYY-MM-DD_Tahap_NamaPeneliti_Versi.ext</span><br>
+       Contoh: <span class="kbd">2025-08-11_Process_AdiNovitarini_v1.xlsx</span></p>
+    <ul>
+      <li><span class="kbd">/Riset/2025/Nama/Plan/</span></li>
+      <li><span class="kbd">/Riset/2025/Nama/DataRaw/</span></li>
+      <li><span class="kbd">/Riset/2025/Nama/Processed/</span></li>
+      <li><span class="kbd">/Riset/2025/Nama/Reports/</span></li>
+      <li><span class="kbd">/Riset/2025/Nama/Publish/</span></li>
+      <li><span class="kbd">/Riset/2025/Nama/Archive/</span></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Peran & Tanggung Jawab</h2>
+    <ul>
+      <li><b>Koordinator Riset Lab</b> – memantau kepatuhan & rekap bulanan.</li>
+      <li><b>Dosen Pembimbing</b> – validasi isi & memberikan persetujuan laporan.</li>
+      <li><b>Mahasiswa/Peneliti</b> – mengisi Form sesuai fase & jadwal.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Frekuensi Pelaporan</h2>
+    <ul>
+      <li><b>Mingguan</b> – update progres via Google Form (fase Execute/Process).</li>
+      <li><b>Bulanan</b> – ringkasan progres ke pembimbing (fase Report).</li>
+      <li><b>Akhir</b> – pelaporan final + preserve (fase Disseminate/Preserve).</li>
+    </ul>
+    <div class="btnbar">
+      <a class="btn primary" target="_blank" rel="noopener"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSe0y1wQtXM8bdjwhpszl7dA8hyEtEmGl8O6FDSiT-YyZCn-kQ/viewform?usp=dialog">Isi / Update Pekerjaan</a>
+      <a class="btn" href="publication.html">Lihat Tracker RLM</a>
+    </div>
+    <p class="note">Semua isian Form akan tampil otomatis pada halaman Tracker (publication.html) setelah tersimpan di Google Sheets.</
