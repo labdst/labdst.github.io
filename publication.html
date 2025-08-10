@@ -102,123 +102,43 @@ const advEl    = document.getElementById('advisor');
 const progEl   = document.getElementById('program');
 
 // === RENDER ===
-const phaseColors = {
-  Plan: "#0ea5e9",
-  Execute: "#2563eb",
-  Process: "#1d4ed8",
-  Report: "#7c3aed",
-  Disseminate: "#9333ea",
-  Preserve: "#a21caf"
-};
-function asDate(s){
-  // coba parse dd/mm/yyyy atau yyyy-mm-dd
-  if(!s) return new Date(0);
-  const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-  if(m){
-    const [_,d,mo,y] = m;
-    const Y = y.length===2 ? ("20"+y) : y;
-    return new Date(+Y, +mo-1, +d);
-  }
-  return new Date(s); // fallback
-}
-
 function render(){
-  // tombol fase + warna aktif
+  // phase buttons
   [...phasesEl.querySelectorAll('.phase')].forEach(b=>{
-    const active = b.dataset.phase===currentPhase;
-    b.classList.toggle('active', active);
-    b.style.background = active ? phaseColors[b.dataset.phase] : '#fff';
-    b.style.borderColor= active ? phaseColors[b.dataset.phase] : 'var(--border)';
-    b.style.color      = active ? '#fff' : 'inherit';
+    b.classList.toggle('active', b.dataset.phase===currentPhase);
   });
 
-  const q = (qEl.value||'').toLowerCase();
+  // filter
+  const q = qEl.value.toLowerCase();
   const adv = advEl.value;
   const prog = progEl.value;
 
-  // filter
-  let filtered = ALL.filter(x =>
+  const filtered = ALL.filter(x =>
     (x.Fase===currentPhase) &&
-    (!q   || (x.Nama + ' ' + x.Judul + ' ' + x.Pekerjaan).toLowerCase().includes(q)) &&
+    (!q || (x.Nama+x.Judul+x.Pekerjaan).toLowerCase().includes(q)) &&
     (!adv || x.Pembimbing===adv) &&
-    (!prog|| x.Program===prog)
+    (!prog || x.Program===prog)
   );
-
-  // sort: tanggal terbaru dulu (fallback: nama)
-  filtered.sort((a,b)=>{
-    const da = asDate(a.Tanggal), db = asDate(b.Tanggal);
-    const diff = db - da; // desc
-    return diff || a.Nama.localeCompare(b.Nama);
-  });
 
   if (!filtered.length){
     listEl.innerHTML = `<div class="empty">Belum ada entri untuk fase <b>${currentPhase}</b>.</div>`;
     return;
   }
 
-  // render kartu + progress bar
-  listEl.innerHTML = filtered.map(x => {
-    const p = Math.max(0, Math.min(100, Number(x.Progress)||0));
-    const barColor = phaseColors[currentPhase] || '#0ea5e9';
-    return `
+  listEl.innerHTML = filtered.map(x => `
     <div class="card">
-      <div class="title">${x.Nama}${x.LinkedIn ? ` — <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
+      <div class="title">${x.Nama} ${x.LinkedIn ? `— <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
       <div class="meta">
         <span class="tag">${x.Program || '-'}</span>
         <span class="tag">${x.Pembimbing || '-'}</span>
-        <span class="badge-num">${p}%</span>
+        <span class="tag">${x.Progress ? (x.Progress+'%') : 'Progress -'}</span>
         <span class="tag">${x.Tanggal || '-'}</span>
       </div>
-      <div class="progress"><div class="progress-bar" style="width:${p}%; background:${barColor}"></div></div>
       <div class="meta"><b>Judul:</b> ${x.Judul || '-'}</div>
       <div><b>Pekerjaan:</b> ${x.Pekerjaan || '-'}</div>
-      ${x.LinkDokumen||x.LinkDataset||x.LinkCode ? `
-        <div class="meta">
-          ${x.LinkDokumen ? `<a href="${x.LinkDokumen}" target="_blank">Dokumen</a> · `:''}
-          ${x.LinkDataset ? `<a href="${x.LinkDataset}" target="_blank">Dataset</a> · `:''}
-          ${x.LinkCode ? `<a href="${x.LinkCode}" target="_blank">Kode</a>`:''}
-        </div>` : ``}
-    </div>`;
-  }).join('');
+    </div>
+  `).join('');
 }
-
-// function render(){
-//   // phase buttons
-//   [...phasesEl.querySelectorAll('.phase')].forEach(b=>{
-//     b.classList.toggle('active', b.dataset.phase===currentPhase);
-//   });
-
-//   // filter
-//   const q = qEl.value.toLowerCase();
-//   const adv = advEl.value;
-//   const prog = progEl.value;
-
-//   const filtered = ALL.filter(x =>
-//     (x.Fase===currentPhase) &&
-//     (!q || (x.Nama+x.Judul+x.Pekerjaan).toLowerCase().includes(q)) &&
-//     (!adv || x.Pembimbing===adv) &&
-//     (!prog || x.Program===prog)
-//   );
-
-//   if (!filtered.length){
-//     listEl.innerHTML = `<div class="empty">Belum ada entri untuk fase <b>${currentPhase}</b>.</div>`;
-//     return;
-//   }
-
-//   listEl.innerHTML = filtered.map(x => `
-//     <div class="card">
-//       <div class="title">${x.Nama} ${x.LinkedIn ? `— <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
-//       <div class="meta">
-//         <span class="tag">${x.Program || '-'}</span>
-//         <span class="tag">${x.Pembimbing || '-'}</span>
-//         <span class="tag">${x.Progress ? (x.Progress+'%') : 'Progress -'}</span>
-//         <span class="tag">${x.Tanggal || '-'}</span>
-//       </div>
-//       <div class="meta"><b>Judul:</b> ${x.Judul || '-'}</div>
-//       <div><b>Pekerjaan:</b> ${x.Pekerjaan || '-'}</div>
-//     </div>
-//   `).join('');
-// }
 
 // === DATA MAPPING ===
 // Ubah nama kolom di sini agar match dengan header di Google Sheets
