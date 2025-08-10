@@ -142,16 +142,15 @@ function render(){
 function rowToObj(header, r){
   const idx = name => header.indexOf(name);
   return {
-    Timestamp : r[idx('Timestamp')] || r[idx('Waktu')] || '',
-    Nama      : r[idx('Nama')] || '',
-    Program   : r[idx('Program')] || '',
-    Pembimbing: r[idx('Pembimbing')] || '',
-    Judul     : r[idx('Judul Riset')] || r[idx('Judul')] || '',
-    Fase      : (r[idx('Fase')] || '').replace(/\s+/g,'').replace(/^\w/,c=>c.toUpperCase()), // normalisasi
-    Pekerjaan : r[idx('Pekerjaan / Update')] || r[idx('Update')] || '',
-    Progress  : r[idx('Progress (%)')] || '',
-    Tanggal   : r[idx('Tanggal Update')] || '',
-    LinkedIn  : r[idx('LinkedIn URL')] || r[idx('LinkedIn')] || ''
+    Nama:              r[header.indexOf('Nama Mahasiswa')] || '',
+    Judul:             r[header.indexOf('Judul Riset')] || '',
+    Fase:              r[header.indexOf('Fase Riset')] || '',
+    Pembimbing:        r[header.indexOf('Dosen Pembimbing')] || '',
+    Program:           r[header.indexOf('Program Studi')] || '',
+    Pekerjaan:         r[header.indexOf('Update Pekerjaan')] || '',
+    LinkDokumen:       r[header.indexOf('Link Dokumen/Laporan')] || '',
+    LinkDataset:       r[header.indexOf('Link Dataset')] || '',
+    LinkCode:          r[header.indexOf('Link Repositori Kode')] || '',
   };
 }
 
