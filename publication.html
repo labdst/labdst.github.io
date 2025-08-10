@@ -102,6 +102,26 @@ const advEl    = document.getElementById('advisor');
 const progEl   = document.getElementById('program');
 
 // === RENDER ===
+const phaseColors = {
+  Plan: "#0ea5e9",
+  Execute: "#2563eb",
+  Process: "#1d4ed8",
+  Report: "#7c3aed",
+  Disseminate: "#9333ea",
+  Preserve: "#a21caf"
+};
+function asDate(s){
+  // coba parse dd/mm/yyyy atau yyyy-mm-dd
+  if(!s) return new Date(0);
+  const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if(m){
+    const [_,d,mo,y] = m;
+    const Y = y.length===2 ? ("20"+y) : y;
+    return new Date(+Y, +mo-1, +d);
+  }
+  return new Date(s); // fallback
+}
+
 function render(){
   // tombol fase + warna aktif
   [...phasesEl.querySelectorAll('.phase')].forEach(b=>{
