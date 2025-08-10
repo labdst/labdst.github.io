@@ -1,54 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Lab DST - Home</title>
+  <title>Lab DST – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header img {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
-    nav {
-      background-color: #004080;
-      padding: 10px 0;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    main {
-      padding: 20px;
-    }
+    :root{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--border:#e2e8f0}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Arial}
+    /* placeholder tinggi header sebelum header.html termuat */
+    #site-header{min-height:64px;background:#004080}
+    .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+
+    .hero{display:grid;gap:14px;align-items:center;margin:12px 0 28px}
+    .hero img{width:100%;max-height:280px;object-fit:contain;background:#fff;border:1px solid var(--border);border-radius:14px}
+    .hero h1{margin:0;font-size:28px}
+    .hero p{margin:0;color:var(--muted)}
+
+    .card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+    h2{margin:0 0 10px;font-size:22px}
+    .rlm-grid{display:grid;gap:10px}
+    @media(min-width:860px){.rlm-grid{grid-template-columns:1.1fr 1fr}}
+
+    ul.check{margin:6px 0 0 20px;padding:0}
+    ul.check li{margin:6px 0}
+
+    .btnbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .btn{appearance:none;border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+    .note{color:var(--muted);font-size:14px;margin-top:8px}
   </style>
 </head>
 <body>
-  <header>
-    <img src="Logo TKD Transparan.png" alt="Header Image">
-  </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="lecture.html">Lecture</a>
-    <a href="publication.html">Management</a>
-    <a href="people.html">People</a>
-    <a href="research.html">Research</a>
-  </nav>
+<!-- header bersama -->
+<div id="site-header"></div>
+<script>
+  fetch("header.html",{cache:"no-store"})
+    .then(r=>r.text())
+    .then(h=>{ document.getElementById("site-header").outerHTML = h; })
+    .catch(e=>console.error("Gagal load header:", e));
+</script>
 
-  <main>
-    <h1>Welcome to Digital Ship Technology Lab</h1>
-    <p>This is the homepage of our GitHub website.</p>
-  </main>
+<main class="wrap">
+  <!-- HERO -->
+  <section class="hero">
+    <img src="Logo%20TKD%20Transparan.png" alt="Digital Ship Technology Laboratory">
+    <div>
+      <h1>Welcome to Digital Ship Technology Lab</h1>
+      <p>Riset kapal digital, automasi maritim, dan robotics di Departemen Teknik Perkapalan – ITS.</p>
+    </div>
+  </section>
+
+  <!-- RLM INTRO -->
+  <section class="card">
+    <h2>Research Lifecycle Management (RLM) di DST Lab</h2>
+    <div class="rlm-grid">
+      <div>
+        <p>Kami mengelola riset berbasis siklus RLM agar pelaporan, diseminasi, dan pelestarian data berjalan rapi dan berkelanjutan.</p>
+        <ul class="check">
+          <li><b>Plan</b> – tujuan, metodologi, jadwal, &amp; target luaran.</li>
+          <li><b>Execute</b> – eksperimen/pengumpulan data + logbook.</li>
+          <li><b>Process</b> – pembersihan, validasi, dan analisis data.</li>
+          <li><b>Report</b> – penyusunan laporan sesuai SOP lab.</li>
+          <li><b>Disseminate</b> – unggah ke website/jurnal/konferensi.</li>
+          <li><b>Preserve</b> – arsip digital &amp; taut ke profil penulis (LinkedIn) untuk keberlanjutan.</li>
+        </ul>
+
+        <div class="btnbar">
+          <!-- ganti URL form kalau perlu -->
+          <a class="btn primary" target="_blank" rel="noopener"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSe0y1wQtXM8bdjwhpszl7dA8hyEtEmGl8O6FDSiT-YyZCn-kQ/viewform?usp=dialog">
+            Isi / Update Pekerjaan (Google Form)
+          </a>
+          <a class="btn" href="publication.html">Lihat Tracker RLM</a>
+          <a class="btn" href="images/RLM_TKD.png" target="_blank" rel="noopener">Lihat Diagram RLM</a>
+        </div>
+        <p class="note">Isian form otomatis masuk Google Sheets dan tampil di halaman <em>Research Lifecycle Tracker</em>.</p>
+      </div>
+
+      <div>
+        <img src="images/RLM_TKD.png" alt="RLM Diagram">
+      </div>
+    </div>
+  </section>
+</main>
 </body>
 </html>
