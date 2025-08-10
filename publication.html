@@ -6,8 +6,10 @@
 <title>Research Lifecycle Tracker – TKD ITS</title>
 <style>
   :root{--bg:#f8fafc;--fg:#0f172a;--muted:#475569;--brand:#0ea5e9;--border:#e2e8f0}
-  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Arial}
-  .wrap{max-width:1100px;margin:36px auto;padding:0 16px}
+  html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Arial}
+  /* placeholder header so layout stabil sebelum header.html ter-load */
+  #site-header{min-height:64px;background:#004080}
+  .wrap{max-width:1100px;margin:24px auto 36px;padding:0 16px}
   h1{margin:0 0 8px;font-size:26px}
   .sub{color:var(--muted);margin:0 0 18px}
   .rlm{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 18px}
@@ -29,21 +31,25 @@
 </style>
 </head>
 <body>
+
+<!-- HEADER DINAMIS -->
 <div id="site-header"></div>
 <script>
-fetch("header.html")
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById("site-header").innerHTML = data;
-  })
-  .catch(err => console.error("Gagal load header:", err));
+  // muat header.html sekali untuk semua halaman
+  fetch("header.html", {cache:"no-store"})
+    .then(r=>r.text())
+    .then(html=>{
+      document.getElementById("site-header").outerHTML = html;
+    })
+    .catch(e=>console.error("Gagal load header:", e));
 </script>
-  
+
+<!-- KONTEN HALAMAN -->
 <div class="wrap">
   <div class="topbar">
     <div>
       <h1>Research Lifecycle Tracker</h1>
-      <p class="sub">Klik fase di bawah untuk melihat pekerjaan tiap mahasiswa. Sumber data: Google Sheets (publish CSV).</p>
+      <p class="sub">Klik fase di bawah untuk melihat pekerjaan tiap mahasiswa. Sumber data: Google Sheets (CSV export).</p>
     </div>
     <div><a href="images/RLM_TKD.png" target="_blank">Lihat Diagram RLM</a></div>
   </div>
@@ -69,15 +75,12 @@ fetch("header.html")
   </div>
 
   <div class="grid" id="list"></div>
-  <p class="note">Tips: Edit data via Google Form, otomatis masuk Sheet & terupdate di sini (± beberapa detik tergantung cache).</p>
+  <p class="note">Tips: Isi via Google Form → masuk ke Sheet → tampil di sini (tergantung cache beberapa detik).</p>
 </div>
 
 <script>
 // === KONFIGURASI ===
-// const CSV_URL = "https://docs.google.com/spreadsheets/d/1Os0hRdXtAc4A_3ndDx2P7ImBoii8n58BUH_HNsfZXkk/edit?resourcekey=&gid=628575131#gid=628575131";
-const CSV_URL =
-  "https://docs.google.com/spreadsheets/d/1Os0hRdXtAc4A_3ndDx2P7ImBoii8n58BUH_HNsfZXkk/export?format=csv&gid=628575131";
-
+const CSV_URL = "https://docs.google.com/spreadsheets/d/1Os0hRdXtAc4A_3ndDx2P7ImBoii8n58BUH_HNsfZXkk/export?format=csv&gid=628575131";
 
 // === UTIL CSV PARSER (ringan) ===
 function parseCSV(text){
@@ -91,13 +94,13 @@ function parseCSV(text){
       else cur += c;
     } else {
       if (c === '"') inQuotes = true;
-      else if (c === ','){ row.push(cur.trim()); cur=''; }
-      else if (c === '\n'){ row.push(cur.trim()); rows.push(row); row=[]; cur=''; }
+      else if (c === ','){ row.push(cur); cur=''; }
+      else if (c === '\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
       else cur += c;
     }
   }
-  if (cur.length || row.length) { row.push(cur.trim()); rows.push(row); }
-  return rows;
+  if (cur.length || row.length) { row.push(cur); rows.push(row); }
+  return rows.map(r => r.map(c => (c||'').trim()));
 }
 
 // === STATE ===
@@ -111,23 +114,41 @@ const qEl      = document.getElementById('q');
 const advEl    = document.getElementById('advisor');
 const progEl   = document.getElementById('program');
 
+// === DATA MAPPING (toleran) ===
+function rowToObj(header, r){
+  const H = header.map(h => (h||'').toString().trim().toLowerCase());
+  const ix = name => H.indexOf(name.toLowerCase());
+  return {
+    Nama:        r[ix('nama mahasiswa')]           || '',
+    Judul:       r[ix('judul riset')]              || '',
+    Fase:       (r[ix('fase riset')]               || '').replace(/\s+/g,' ').trim(),
+    Pembimbing:  r[ix('dosen pembimbing')]         || '',
+    Program:     r[ix('program studi')]            || '',
+    Pekerjaan:   r[ix('update pekerjaan')]         || '',
+    LinkedIn:    r[ix('linkedin url')]             || '',
+    Progress:    r[ix('progress (%)')]             || '',
+    Tanggal:     r[ix('tanggal update')]           || '',
+    LinkDokumen: r[ix('link dokumen/laporan')]     || '',
+    LinkDataset: r[ix('link dataset')]             || '',
+    LinkCode:    r[ix('link repositori kode')]     || ''
+  };
+}
+
 // === RENDER ===
 function render(){
-  // phase buttons
   [...phasesEl.querySelectorAll('.phase')].forEach(b=>{
     b.classList.toggle('active', b.dataset.phase===currentPhase);
   });
 
-  // filter
-  const q = qEl.value.toLowerCase();
+  const q = (qEl.value||'').toLowerCase();
   const adv = advEl.value;
   const prog = progEl.value;
 
   const filtered = ALL.filter(x =>
     (x.Fase===currentPhase) &&
-    (!q || (x.Nama+x.Judul+x.Pekerjaan).toLowerCase().includes(q)) &&
+    (!q   || (x.Nama + ' ' + x.Judul + ' ' + x.Pekerjaan).toLowerCase().includes(q)) &&
     (!adv || x.Pembimbing===adv) &&
-    (!prog || x.Program===prog)
+    (!prog|| x.Program===prog)
   );
 
   if (!filtered.length){
@@ -137,7 +158,7 @@ function render(){
 
   listEl.innerHTML = filtered.map(x => `
     <div class="card">
-      <div class="title">${x.Nama} ${x.LinkedIn ? `— <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
+      <div class="title">${x.Nama}${x.LinkedIn ? ` — <a href="${x.LinkedIn}" target="_blank" rel="noopener">LinkedIn</a>` : ''}</div>
       <div class="meta">
         <span class="tag">${x.Program || '-'}</span>
         <span class="tag">${x.Pembimbing || '-'}</span>
@@ -146,35 +167,25 @@ function render(){
       </div>
       <div class="meta"><b>Judul:</b> ${x.Judul || '-'}</div>
       <div><b>Pekerjaan:</b> ${x.Pekerjaan || '-'}</div>
+      ${x.LinkDokumen||x.LinkDataset||x.LinkCode ? `
+        <div class="meta">
+          ${x.LinkDokumen ? `<a href="${x.LinkDokumen}" target="_blank">Dokumen</a> · `:''}
+          ${x.LinkDataset ? `<a href="${x.LinkDataset}" target="_blank">Dataset</a> · `:''}
+          ${x.LinkCode ? `<a href="${x.LinkCode}" target="_blank">Kode</a>`:''}
+        </div>` : ``}
     </div>
   `).join('');
-}
-
-// === DATA MAPPING ===
-// Ubah nama kolom di sini agar match dengan header di Google Sheets
-function rowToObj(header, r){
-  const idx = name => header.indexOf(name);
-  return {
-    Nama:              r[header.indexOf('Nama Mahasiswa')] || '',
-    Judul:             r[header.indexOf('Judul Riset')] || '',
-    Fase:              r[header.indexOf('Fase Riset')] || '',
-    Pembimbing:        r[header.indexOf('Dosen Pembimbing')] || '',
-    Program:           r[header.indexOf('Program Studi')] || '',
-    Pekerjaan:         r[header.indexOf('Update Pekerjaan')] || '',
-    LinkDokumen:       r[header.indexOf('Link Dokumen/Laporan')] || '',
-    LinkDataset:       r[header.indexOf('Link Dataset')] || '',
-    LinkCode:          r[header.indexOf('Link Repositori Kode')] || '',
-  };
 }
 
 // === LOAD CSV ===
 async function loadCSV(){
   const res = await fetch(CSV_URL, {cache:'no-store'});
-  const text = await res.text();
-  const rows = parseCSV(text);
-  const header = rows.shift();
-  ALL = rows.map(r => rowToObj(header, r)).filter(x=>x.Nama || x.Judul);
-  // isi pilihan pembimbing unik
+  let text = await res.text();
+  text = text.replace(/\r/g,'').trim(); // normalisasi CRLF
+  const rows = parseCSV(text).filter(r => r.some(c => (c||'').trim() !== ''));
+  const header = rows.shift() || [];
+  ALL = rows.map(r => rowToObj(header, r)).filter(x => x.Nama || x.Judul);
+
   const advisors = [...new Set(ALL.map(x=>x.Pembimbing).filter(Boolean))].sort();
   advEl.innerHTML = `<option value="">Pembimbing (semua)</option>` + advisors.map(a=>`<option>${a}</option>`).join('');
   render();
@@ -189,7 +200,7 @@ phasesEl.addEventListener('click', e=>{
 
 // === INIT ===
 loadCSV().catch(err=>{
-  listEl.innerHTML = `<div class="empty">Gagal memuat data. Cek URL CSV & izin publik.</div>`;
+  listEl.innerHTML = `<div class="empty">Gagal memuat data. Cek URL CSV & izin akses Sheet (Anyone with the link, Viewer).</div>`;
   console.error(err);
 });
 </script>
